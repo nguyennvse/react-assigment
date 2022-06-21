@@ -1,0 +1,12 @@
+@keyframes slideDown {
+    0% {transform: translateY(0)}
+    25% {transform: translateY(150px)}
+    50% {transform: translateY(150px)}
+    75% {transform: translateY(150px)}
+    100% {transform: translateY(0)}
+}
+
+.slide {
+ animation-name: slideDown;
+ animation-duration: 2.5s;
+}
