@@ -11,7 +11,8 @@ export const getProductsThunk = createAsyncThunk(
 );
 const initialState = {
   value: [],
-  fetchedList:[]
+  fetchedList:[],
+  isLoading:false,
 };
 
 export const selectedProductsSlide = createSlice({
@@ -44,7 +45,11 @@ export const selectedProductsSlide = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(getProductsThunk.pending, (state, action) => {
+      state.isLoading = true;
+    });
     builder.addCase(getProductsThunk.fulfilled, (state, action) => {
+      state.isLoading = false;
       state.fetchedList = action.payload.products;
     });
   },

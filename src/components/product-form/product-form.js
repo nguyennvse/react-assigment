@@ -1,20 +1,25 @@
 import React, { Fragment } from "react";
 import withRouter from "../../hoc/with-router";
 import { get, post, put } from "../../services/base-api";
-import { required, isEmail, isNumber,isInteger } from "../../services/validation";
+import {
+  required,
+  isEmail,
+  isNumber,
+  isInteger,
+} from "../../services/validation";
 import Controls from "../control/control";
 import PortalContainer from "../portal-container/portal-container";
 import Toast from "../toast/toast";
-
+import Spinner from "../spinner/spinner";
 class ProductForm extends React.Component {
   #productId;
   #formConfig = [
     { name: "title", validations: [required] },
-    { name: "stock", validations: [required, isInteger,] },
+    { name: "stock", validations: [required, isInteger] },
     { name: "description", validations: [required] },
-    { name: "discountPercentage", validations: [required,isNumber] },
-    { name: "price", validations: [required,isNumber] },
-    { name: "rating", validations: [required,isNumber] },
+    { name: "discountPercentage", validations: [required, isNumber] },
+    { name: "price", validations: [required, isNumber] },
+    { name: "rating", validations: [required, isNumber] },
   ];
   constructor(props) {
     super(props);
@@ -24,6 +29,7 @@ class ProductForm extends React.Component {
       images: "",
       form: this.initForm(),
       isToastOn: false,
+      isOpenSpinner: false,
     };
     const { router: { params: { productId = "" } = {} } = {} } = this.props;
     this.#productId = productId || "";
@@ -31,26 +37,28 @@ class ProductForm extends React.Component {
     this.save = this.save.bind(this);
   }
 
-  initForm(){
+  initForm = () => {
     return this.#formConfig.map((config) => ({
       name: config.name,
       value: "",
       errorMessage: "",
-      validations: config.validations
-    }))
-  }
+      validations: config.validations,
+    }));
+  };
   componentDidMount() {
     this.getSelectedProduct();
   }
 
-  componentDidUpdate(prevProps){
-    if(prevProps.new != this.props.new){
-      this.setState({form:this.initForm()})
+  componentDidUpdate(prevProps) {
+    if (prevProps.new != this.props.new) {
+      this.setState({ form: this.initForm() });
     }
   }
-  getSelectedProduct() {
+  getSelectedProduct = () => {
     if (!this.props.new) {
+      this.setState({ isOpenSpinner: true });
       get(`products/${this.#productId}`).then((res) => {
+        this.setState({ isOpenSpinner: false });
         const {
           data: {
             id = 0,
@@ -79,29 +87,24 @@ class ProductForm extends React.Component {
           rating,
         });
       });
-    }else{
-      this.setState({form:this.initForm()})
+    } else {
+      this.setState({ form: this.initForm() });
     }
-  }
+  };
 
-  patchDataToForm(res) {
-    const { form = []} = this.state;
+  patchDataToForm = (res) => {
+    const { form = [] } = this.state;
     Object.keys(res).forEach((key) => {
-      const control = form.find(formControl => formControl.name === key);
-      if(control){
+      const control = form.find((formControl) => formControl.name === key);
+      if (control) {
         control.value = res[key];
         // this.validateControl(key,res[key]);
       }
     });
-    this.setState({form:form});
-  }
+    this.setState({ form: form });
+  };
 
-  handleInputChange_bk(event) {
-    const { target: { name = "", value = "" } = {} } = event;
-    this.setState({ [name]: value });
-  }
-
-  validateControl(name, value) {
+  validateControl = (name, value) => {
     const config = this.#formConfig.find((control) => control.name === name);
     if (!config) return "";
     let errorMsg = "";
@@ -109,9 +112,9 @@ class ProductForm extends React.Component {
       errorMsg += fn(value);
     });
     return errorMsg;
-  }
+  };
 
-  handleInputChange(event) {
+  handleInputChange = (event) => {
     const { target: { name = "", value = "" } = {} } = event;
     let { form = [] } = this.state;
     const control = form.find((control) => control.name === name);
@@ -120,9 +123,9 @@ class ProductForm extends React.Component {
     control.value = value;
     control.errorMessage = errorMsg;
     this.setState(() => ({ form: form }));
-  }
+  };
 
-  createInputControl() {
+  createInputControl = () => {
     return this.#formConfig.map((config, index) => {
       const control = this.state.form.find(
         (control) => control.name === config.name
@@ -130,33 +133,41 @@ class ProductForm extends React.Component {
       return (
         <Fragment key={index}>
           <div className="w-full text-left px-3 mb-6">
-            <Controls label={`${config.name[0].toUpperCase()}${config.name.substring(1)}`} name={control.name} value={control.value} handleChange={this.handleInputChange} errorMessage={control.errorMessage}/>
+            <Controls
+              label={`${config.name[0].toUpperCase()}${config.name.substring(
+                1
+              )}`}
+              name={control.name}
+              value={control.value}
+              handleChange={this.handleInputChange}
+              errorMessage={control.errorMessage}
+            />
           </div>
         </Fragment>
       );
     });
-  }
+  };
 
-  getFormValue() {
+  getFormValue = () => {
     const obj = {};
     this.state.form.forEach((control) => {
       obj[control.name] = control.value;
     });
     return obj;
-  }
- 
-  validateForm(){
+  };
+
+  validateForm = () => {
     const form = this.state.form;
-    form.forEach(control => {
-      control.errorMessage = this.validateControl(control.name,control.value);
+    form.forEach((control) => {
+      control.errorMessage = this.validateControl(control.name, control.value);
     });
-    this.setState({form:form});
-    return this.state.form.every(control => !control.errorMessage)
-  }
- 
-  save() {
+    this.setState({ form: form });
+    return this.state.form.every((control) => !control.errorMessage);
+  };
+
+  save = () => {
     const isValidForm = this.validateForm();
-    if(!isValidForm) return;
+    if (!isValidForm) return;
     const body = this.getFormValue();
     if (this.#productId) {
       put(`products/${this.#productId}`, body).then((res) => {
@@ -168,18 +179,27 @@ class ProductForm extends React.Component {
         this.showAndHideToast();
       });
     }
-  }
+  };
 
-  showAndHideToast(){
-    this.setState({isToastOn:true});
+  showAndHideToast = () => {
+    this.setState({ isToastOn: true });
   }
 
   render() {
-    const toastMessage = this.props.new ? 'Add successfully' : 'Update successfully'
+    const toastMessage = this.props.new
+      ? "Add successfully"
+      : "Update successfully";
     return (
       <div>
-        
-          <PortalContainer><Toast isToastOn={this.state.isToastOn} message={toastMessage}></Toast></PortalContainer> 
+        <PortalContainer>
+          <Spinner isOpenSpinner={this.state.isOpenSpinner}></Spinner>
+        </PortalContainer>
+        <PortalContainer>
+          <Toast
+            isToastOn={this.state.isToastOn}
+            message={toastMessage}
+          ></Toast>
+        </PortalContainer>
 
         <div className="w-full flex mt-10 px-10">
           {this.#productId && (

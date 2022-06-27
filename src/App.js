@@ -27,10 +27,10 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <ContextStore.Provider
-          value={{
-            value: this.state.context,
-            setContext: this.updateContext.bind(this),
-          }}
+          value={[
+            this.state.context,
+           this.updateContext.bind(this),
+          ]}
         >
           <div className="App">
             <Routes>

@@ -1,34 +1,17 @@
 import React from "react";
 
-export default class Spinner extends React.Component{
-  constructor() {
-    super();
+export default class Spinner extends React.Component {
+  constructor(props) {
+    super(props);
   }
   render() {
     return (
-      <div className="flex justify-center items-center space-x-2">
-        <div
-          className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-blue-600"
-          role="status"
-        >
-          <span className="visually-hidden">Loading...</span>
+      this.props.isOpenSpinner && (
+        <div className="modal flex items-center justify-center fixed top-0 left-0 w-full h-full backdrop-opacity-10 backdrop-invert bg-white/30">
+          <div className="spinner-border animate-spin inline-block w-24 h-24 border-4 rounded-full text-blue-600">
+          </div>
         </div>
-        <div
-          className="
-    spinner-border
-    animate-spin
-    inline-block
-    w-8
-    h-8
-    border-4
-    rounded-full
-    text-purple-500
-  "
-          role="status"
-        >
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
+      )
     );
   }
 }
