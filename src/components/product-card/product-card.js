@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import ContextStore from "../../context/context-store";
 import { decrement, increment } from "../../redux/selected-products-slide";
 import { useDispatch } from "react-redux";
+import style from './product-card.module.scss';
+
 const ProductCard = ({
   id = 0,
   title = "",
@@ -19,9 +21,6 @@ const ProductCard = ({
   const [value, setContext] = useContext(ContextStore);
   const dispatch = useDispatch();
   let navigate = useNavigate();
-  useEffect(() => {
-    console.log(quant);
-  }, []);
 
   const addProductToContext = () => {
     const existedProduct = value.find((v) => v.id === id);
@@ -52,10 +51,10 @@ const ProductCard = ({
     <div className="flex w-4/5 mx-auto shadow-lg mt-2">
       <img className="w-1/3" alt="" src={thumbnail} />
       <div className="w-2/3">
-        <div className="px-4 text-left pt-2 w-full">
+        <div className={`px-4 text-left pt-2 w-full ${style['card-content']}`}>
           <p data-testid="product-name">Name : {title}</p>
-          <p>Description : {description}</p>
-          <p>
+          <p data-testid="description">Description : {description}</p>
+          <p data-testid={isShoppingCart || isReduxShoppingCart ? `Quantity` : `Stock`}>
             {isShoppingCart || isReduxShoppingCart ? `Quantity` : `Stock`} :{" "}
             {isShoppingCart || isReduxShoppingCart ? quant : stock}
           </p>
@@ -64,16 +63,16 @@ const ProductCard = ({
 
         {isList && (
           <Fragment>
-            <button
+            <button data-testid="navigate"
               onClick={() => navigate(`/edit/${id}`)}
-              className="h-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              className="h-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full sm:text-xs"
             >
               View Detail
             </button>
 
-            <button
+            <button data-testid="addProductToContext"
               onClick={() => addProductToContext()}
-              className="h-12 ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              className="h-12 ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full sm:text-xs"
             >
               Add to cart
             </button>
@@ -81,16 +80,16 @@ const ProductCard = ({
         )}
           {isReduxList && (
             <Fragment>
-              <button
+              <button data-testid="navigate"
                 onClick={() => navigate(`/edit/${id}`)}
-                className="h-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                className="h-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full sm:text-xs"
               >
                 View Detail
               </button>
 
-              <button
+              <button data-testid="addProductToRedux"
                 onClick={() => addProductToRedux()}
-                className="h-12 ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                className="h-12 ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full sm:text-xs"
               >
                 Add to cart
               </button>
@@ -99,15 +98,15 @@ const ProductCard = ({
 
           {isShoppingCart && (
             <Fragment>
-              <button
+              <button data-testid="editQuant"
                 onClick={() => editQuant(1)}
-                className="h-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                className="h-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full sm:text-xs"
               >
                 Increase
               </button>
-              <button
+              <button data-testid="editQuantDes"
                 onClick={() => editQuant(-1)}
-                className="h-12 ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                className="h-12 ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full sm:text-xs"
               >
                 Decrease
               </button>
@@ -116,7 +115,7 @@ const ProductCard = ({
 
           {isReduxShoppingCart && (
             <Fragment>
-              <button
+              <button data-testid="editQuantRedux"
                 onClick={() =>
                   dispatch(
                     increment({ id, title, description, thumbnail, quant: 1 })
@@ -126,7 +125,7 @@ const ProductCard = ({
               >
                 Increase
               </button>
-              <button
+              <button data-testid="editQuantDesRedux"
                 onClick={() =>
                   dispatch(
                     decrement({ id, title, description, thumbnail, quant: 1 })

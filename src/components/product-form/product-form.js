@@ -211,7 +211,7 @@ class ProductForm extends React.Component {
           </div>
         </div>
         <div className="w-full flex mt-1 justify-end items-end pr-12">
-          <button
+          <button data-testid="save"
             onClick={this.save}
             className="h-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
           >

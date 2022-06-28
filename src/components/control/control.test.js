@@ -11,3 +11,8 @@ it('should be control label',()=>{
     expect(getByTestId('label')).toHaveTextContent('Name');
 })
 
+it('should be control label',()=>{
+    const {getByTestId,container} = render(<Controls label='Name'/>);
+    fireEvent.keyUp(getByTestId('control'))
+    expect(container).toBeTruthy();
+})

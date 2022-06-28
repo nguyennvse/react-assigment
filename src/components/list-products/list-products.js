@@ -6,6 +6,7 @@ import ContextStore from "../../context/context-store";
 import Spinner from "../spinner/spinner";
 import PortalContainer from "../portal-container/portal-container";
 
+
 export default class ListProducts extends React.Component {
   constructor() {
     super();
@@ -19,7 +20,7 @@ export default class ListProducts extends React.Component {
     this.setState({ isOpenSpinner: true });
     get("products").then((res) => {
       this.setState({ productList: res.data.products });
-        this.setState({ isOpenSpinner: false });
+      this.setState({ isOpenSpinner: false });
     });
   }
 

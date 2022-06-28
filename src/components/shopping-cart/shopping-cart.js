@@ -3,7 +3,7 @@ import ContextStore from "../../context/context-store";
 import ProductCard from "../product-card/product-card";
 
 const ShoppingCart = () => {
-  const [value]   = useContext(ContextStore);
+  const [value] = useContext(ContextStore);
 
   return (
     <div>
