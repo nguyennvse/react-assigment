@@ -1,3 +1,32 @@
 .card-content{
     height: calc(100% - 72px);
 }
+
+.sm-button{
+    height: 50px;
+    width: 100px;
+    margin-left: 5px;
+}
+
+.btn-container{
+    padding: 13px;
+}
+@media (max-width:600px) {
+    .card-content{
+        height: calc(100% - 40px);
+    }
+    .sm-text{
+        font-size: 12px;
+    }
+
+    .sm-button{
+        height: 30px;
+        width: 75px;
+        padding:5px;
+        margin-left: 5px;
+    }
+
+    .btn-container{
+        padding: 5px;
+    }
+}

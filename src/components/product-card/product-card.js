@@ -50,7 +50,7 @@ const ProductCard = ({
   return (
     <div className="flex w-4/5 mx-auto shadow-lg mt-2">
       <img className="w-1/3" alt="" src={thumbnail} />
-      <div className="w-2/3">
+      <div className={`w-2/3 ${style['sm-text']}`}>
         <div className={`px-4 text-left pt-2 w-full ${style['card-content']}`}>
           <p data-testid="product-name">Name : {title}</p>
           <p data-testid="description">Description : {description}</p>
@@ -59,20 +59,20 @@ const ProductCard = ({
             {isShoppingCart || isReduxShoppingCart ? quant : stock}
           </p>
         </div>
-        <div className="flex h-auto justify-end items-end p-3 w-full min-w-fit">
+        <div className={`flex h-auto justify-end items-end w-full min-w-fit ${style['sm-text']} ${style['btn-container']}`}>
 
         {isList && (
           <Fragment>
             <button data-testid="navigate"
               onClick={() => navigate(`/edit/${id}`)}
-              className="h-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full sm:text-xs"
+              className={` bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full ${style['sm-button']}`}
             >
               View Detail
             </button>
 
             <button data-testid="addProductToContext"
               onClick={() => addProductToContext()}
-              className="h-12 ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full sm:text-xs"
+              className={` bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full ${style['sm-button']}`}
             >
               Add to cart
             </button>
@@ -82,14 +82,14 @@ const ProductCard = ({
             <Fragment>
               <button data-testid="navigate"
                 onClick={() => navigate(`/edit/${id}`)}
-                className="h-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full sm:text-xs"
+                className={` bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full ${style['sm-button']}`}
               >
                 View Detail
               </button>
 
               <button data-testid="addProductToRedux"
                 onClick={() => addProductToRedux()}
-                className="h-12 ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full sm:text-xs"
+                className={` bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full ${style['sm-button']}`}
               >
                 Add to cart
               </button>
@@ -100,13 +100,13 @@ const ProductCard = ({
             <Fragment>
               <button data-testid="editQuant"
                 onClick={() => editQuant(1)}
-                className="h-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full sm:text-xs"
+                className={` bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full ${style['sm-button']}`}
               >
                 Increase
               </button>
               <button data-testid="editQuantDes"
                 onClick={() => editQuant(-1)}
-                className="h-12 ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full sm:text-xs"
+                className={` bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full ${style['sm-button']}`}
               >
                 Decrease
               </button>
@@ -121,7 +121,7 @@ const ProductCard = ({
                     increment({ id, title, description, thumbnail, quant: 1 })
                   )
                 }
-                className="h-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                className={` bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full ${style['sm-button']}`}
               >
                 Increase
               </button>
@@ -131,7 +131,7 @@ const ProductCard = ({
                     decrement({ id, title, description, thumbnail, quant: 1 })
                   )
                 }
-                className="h-12 ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                className={` bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full ${style['sm-button']}`}
               >
                 Decrease
               </button>
