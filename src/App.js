@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import ShoppingCartRedux from "./components/shopping-cart-redux/shopping-cart-redux";
 import { ListProductsRedux } from "./components/list-products-redux/list-products-redux";
+import ProductFormFunc from "./components/product-form/product-form-func";
 
 class App extends React.Component {
   constructor(props) {
@@ -27,10 +28,7 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <ContextStore.Provider
-          value={[
-            this.state.context,
-           this.updateContext.bind(this),
-          ]}
+          value={[this.state.context, this.updateContext.bind(this)]}
         >
           <div className="App">
             <Routes>
@@ -42,10 +40,19 @@ class App extends React.Component {
                     element={<ProductForm new={false} />}
                   ></Route>
                 </Route>
+                <Route
+                  exact
+                  path="/editfunc"
+                  element={<ProductFormFunc isNew={true} />}
+                ></Route>
+                <Route
+                  path="/editfunc/:productId"
+                  element={<ProductFormFunc isNew={false} />}
+                ></Route>
                 <Route path="/listredux" element={<ListProductsRedux />} />
                 <Route path="/new" element={<ProductForm new={true} />} />
                 <Route path="/cart" element={<ShoppingCart />} />
-                <Route path="/cartredux" element={<ShoppingCartRedux />}/>
+                <Route path="/cartredux" element={<ShoppingCartRedux />} />
                 <Route
                   path="*"
                   element={

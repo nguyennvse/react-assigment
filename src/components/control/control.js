@@ -6,12 +6,13 @@
       {label}
     </label>
     <input
-      data-testid='control'
+      data-testid={`control`}
       className="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
       type="text"
       name={name}
       value={value}
       onChange={handleChange}
+      title={name}
     />
     {errorMessage && <ErrorMessage msg={errorMessage}/>}
   </div>

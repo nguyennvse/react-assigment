@@ -64,7 +64,7 @@ const ProductCard = ({
         {isList && (
           <Fragment>
             <button data-testid="navigate"
-              onClick={() => navigate(`/edit/${id}`)}
+              onClick={() => navigate(`/editfunc/${id}`)}
               className={` bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full ${style['sm-button']}`}
             >
               View Detail

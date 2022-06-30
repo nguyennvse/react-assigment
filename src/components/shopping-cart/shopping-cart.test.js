@@ -1,4 +1,4 @@
-import { render, cleanup, afterEach } from "@testing-library/react";
+import { render, cleanup, afterEach, screen } from "@testing-library/react";
 import { useState } from "react";
 import ContextStore from "../../context/context-store";
 import ShoppingCart from "./shopping-cart";
@@ -24,5 +24,5 @@ it("context should be array", () => {
   const { getAllByTestId, getAllByText, container } = renderWithRedux(
     <ShoppingCart />
   );
-  expect(container).toBeTruthy();
+  expect(screen).toHaveTextContent('test');
 });

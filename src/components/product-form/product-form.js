@@ -33,8 +33,7 @@ class ProductForm extends React.Component {
     };
     const { router: { params: { productId = "" } = {} } = {} } = this.props;
     this.#productId = productId || "";
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.save = this.save.bind(this);
+
   }
 
   initForm = () => {
@@ -45,6 +44,7 @@ class ProductForm extends React.Component {
       validations: config.validations,
     }));
   };
+  
   componentDidMount() {
     this.getSelectedProduct();
   }
@@ -77,7 +77,6 @@ class ProductForm extends React.Component {
           thumbnail: thumbnail,
           images: images,
         });
-
         this.patchDataToForm({
           title,
           stock,
@@ -94,6 +93,7 @@ class ProductForm extends React.Component {
 
   patchDataToForm = (res) => {
     const { form = [] } = this.state;
+
     Object.keys(res).forEach((key) => {
       const control = form.find((formControl) => formControl.name === key);
       if (control) {
@@ -156,7 +156,7 @@ class ProductForm extends React.Component {
     return obj;
   };
 
-  validateForm = () => {
+  validateForm =  () => {
     const form = this.state.form;
     form.forEach((control) => {
       control.errorMessage = this.validateControl(control.name, control.value);
@@ -212,7 +212,7 @@ class ProductForm extends React.Component {
         </div>
         <div className="w-full flex mt-1 justify-end items-end pr-12">
           <button data-testid="save"
-            onClick={this.save}
+            onClick={()=> this.save()}
             className="h-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
           >
             Save

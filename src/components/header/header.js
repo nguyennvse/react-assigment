@@ -72,6 +72,11 @@ export default class Header extends React.Component {
               isActive ? this.activeClassName : this.normalClassName
             } to="/cartredux">Shopping Cart Redux</NavLink>
               </li>
+              <li className="nav-item p-2">
+              <NavLink className={({ isActive }) =>
+              isActive ? this.activeClassName : this.normalClassName
+            } to="/editfunc">Form Func</NavLink>
+              </li>
             </ul>
           </div>
 

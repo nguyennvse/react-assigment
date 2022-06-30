@@ -1,4 +1,5 @@
-import { render, cleanup, fireEvent } from "@testing-library/react"
+import { render, cleanup, fireEvent, screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event";
 import Controls from "./control";
 
 it('should take a snapshot',()=>{
@@ -12,7 +13,8 @@ it('should be control label',()=>{
 })
 
 it('should be control label',()=>{
-    const {getByTestId,container} = render(<Controls label='Name'/>);
-    fireEvent.keyUp(getByTestId('control'))
-    expect(container).toBeTruthy();
+    const change = jest.fn()
+    const {getByTestId,container} = render(<Controls name={'title'} label='Name' handleChange={change}/>);
+    userEvent.type(screen.getByTitle('title'), 'JavaScript')
+    expect(change).toHaveBeenCalled();
 })
