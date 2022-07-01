@@ -12,11 +12,6 @@ function renderWithRedux(comp,contextvalue = [[{ name: "test" }], jest.fn()]) {
         <ContextStore.Provider value={contextvalue}>
           <BrowserRouter>
           {comp}
-
-            {/* <Routes>
-              <Route path="/" element={<Layout />}></Route>
-              <Route path="/" element={comp}></Route>
-            </Routes> */}
           </BrowserRouter>
         </ContextStore.Provider>
       </Provider>

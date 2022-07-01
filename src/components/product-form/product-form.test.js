@@ -156,7 +156,4 @@ it("should change callback", async () => {
   await act(async () => {
     await Promise.resolve();
   });
-  const listControl = screen.getAllByTestId('control');
-  const nameInput = screen.getByTitle('title');
-  console.log('nameInput',nameInput)
 });

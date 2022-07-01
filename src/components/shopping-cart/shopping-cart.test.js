@@ -1,12 +1,9 @@
-import { render, cleanup, afterEach, screen } from "@testing-library/react";
-import { useState } from "react";
+import { render } from "@testing-library/react";
 import ContextStore from "../../context/context-store";
 import ShoppingCart from "./shopping-cart";
 import { store } from "../../redux/store";
 import { Provider } from "react-redux";
-import { Routes, Route, Link, BrowserRouter } from "react-router-dom";
-import { createMemoryHistory } from "history";
-import Layout from "../layout";
+import { BrowserRouter } from "react-router-dom";
 function renderWithRedux(comp) {
   return {
     ...render(
@@ -24,5 +21,5 @@ it("context should be array", () => {
   const { getAllByTestId, getAllByText, container } = renderWithRedux(
     <ShoppingCart />
   );
-  expect(screen).toHaveTextContent('test');
+  expect(container).toBeTruthy();
 });
