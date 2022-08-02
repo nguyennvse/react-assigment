@@ -2,15 +2,14 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 export default class Header extends React.Component {
-  constructor() {
-    super();
-    this.activeClassName = 'nav-link text-white font-semibold';
-    this.normalClassName = 'nav-link text-gray-400'
+  constructor(props) {
+    super(props);
+    this.activeClassName = "nav-link text-white font-semibold";
+    this.normalClassName = "nav-link text-gray-400";
   }
 
   render() {
     return (
-      
       <nav className="relative w-full flex flex-wrap items-center justify-between py-3 bg-gray-900 text-gray-200 shadow-lg navbar navbar-expand-lg navbar-light">
         <div className="container-fluid w-full flex flex-wrap items-center justify-between px-6">
           <button
@@ -47,40 +46,86 @@ export default class Header extends React.Component {
                 {/* <a className="nav-link text-white" href="#">
                   Dashboard
                 </a> */}
-                <NavLink className={({ isActive }) =>
-              isActive ? this.activeClassName : this.normalClassName
-            } to="/">List</NavLink>
-                
-              </li>
-              <li className="nav-item p-2"> 
-              <NavLink className={({ isActive }) =>
-              isActive ? this.activeClassName : this.normalClassName
-            } to="/new">New</NavLink>
-              </li>
-              <li className="nav-item p-2">
-              <NavLink className={({ isActive }) =>
-              isActive ? this.activeClassName : this.normalClassName
-            } to="/cart">Shopping Cart</NavLink>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? this.activeClassName : this.normalClassName
+                  }
+                  to="/"
+                >
+                  List
+                </NavLink>
               </li>
               <li className="nav-item p-2">
-              <NavLink className={({ isActive }) =>
-              isActive ? this.activeClassName : this.normalClassName
-            } to="/listredux">List Redux</NavLink>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? this.activeClassName : this.normalClassName
+                  }
+                  to="/new"
+                >
+                  New
+                </NavLink>
               </li>
               <li className="nav-item p-2">
-              <NavLink className={({ isActive }) =>
-              isActive ? this.activeClassName : this.normalClassName
-            } to="/cartredux">Shopping Cart Redux</NavLink>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? this.activeClassName : this.normalClassName
+                  }
+                  to="/cart"
+                >
+                  Shopping Cart
+                </NavLink>
               </li>
               <li className="nav-item p-2">
-              <NavLink className={({ isActive }) =>
-              isActive ? this.activeClassName : this.normalClassName
-            } to="/editfunc">Form Func</NavLink>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? this.activeClassName : this.normalClassName
+                  }
+                  to="/listredux"
+                >
+                  List Redux
+                </NavLink>
+              </li>
+              <li className="nav-item p-2">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? this.activeClassName : this.normalClassName
+                  }
+                  to="/cartredux"
+                >
+                  Shopping Cart Redux
+                </NavLink>
+              </li>
+              <li className="nav-item p-2">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? this.activeClassName : this.normalClassName
+                  }
+                  to="/editfunc"
+                >
+                  Form Func
+                </NavLink>
+              </li>
+              <li className="nav-item p-2 absolute right-3 sm:">
+                <div className="flex justify-center">
+                  <div className="form-check form-switch">
+                    <input
+                      className="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
+                      type="checkbox"
+                      role="switch"
+                      id="flexSwitchCheckDefault"
+                      onChange={this.props.switchTheme}
+                    />
+                    <label
+                      className="form-check-label inline-block"
+                      htmlFor="flexSwitchCheckDefault"
+                    >
+                      {this.props.theme ? 'Dark':'Light'}
+                    </label>
+                  </div>
+                </div>
               </li>
             </ul>
           </div>
-
-          
         </div>
       </nav>
     );

@@ -1,0 +1,25 @@
+$white: white;
+$black: black;
+
+@mixin theme($bgcolor, $color) {
+  background-color: $bgcolor;
+  color: $color;
+}
+
+.light {
+  @include theme($white, $black);
+}
+
+.dark {
+  @include theme($black, $white);
+}
+
+.content-expand {
+  transition: all 1s;
+  width: calc(100% - 200px);
+}
+
+.content-collapse {
+  transition: all 1s;
+  width: calc(100% - 50px);
+}

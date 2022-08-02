@@ -2,10 +2,14 @@
     height: calc(100% - 72px);
 }
 
-.sm-button{
+%sm-button{
     height: 50px;
     width: 100px;
     margin-left: 5px;
+}
+
+.sm-button{
+   @extend %sm-button
 }
 
 .btn-container{

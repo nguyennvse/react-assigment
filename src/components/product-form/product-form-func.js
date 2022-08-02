@@ -1,4 +1,10 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, {
+  Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { get, post, put } from "../../services/base-api";
 import { required, isNumber, isInteger } from "../../services/validation";
 import Controls from "../control/control";
@@ -8,21 +14,29 @@ import Spinner from "../spinner/spinner";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const ProductFormFunc = ({ isNew = false }) => {
+  const titleRef = useRef('');
+  const stockRef = useRef('');
+  const descriptionRef = useRef('');
+  const discountPercentageRef = useRef('');
+  const priceRef = useRef('');
+  const ratingRef = useRef('');
+
   const formConfig = [
-    { name: "title", validations: [required] },
-    { name: "stock", validations: [required, isInteger] },
-    { name: "description", validations: [required] },
-    { name: "discountPercentage", validations: [required, isNumber] },
-    { name: "price", validations: [required, isNumber] },
-    { name: "rating", validations: [required, isNumber] },
+    { name: "title", validations: [required], ref:titleRef },
+    { name: "stock", validations: [required, isInteger],ref:stockRef },
+    { name: "description", validations: [required],ref: descriptionRef },
+    { name: "discountPercentage", validations: [required, isNumber], ref: discountPercentageRef },
+    { name: "price", validations: [required, isNumber], ref: priceRef },
+    { name: "rating", validations: [required, isNumber], ref: ratingRef },
   ];
 
-  const initForm = () => {
+  function initForm() {
     return formConfig.map((config) => ({
       name: config.name,
       value: "",
       errorMessage: "",
       validations: config.validations,
+      ref: config.ref
     }));
   };
 
@@ -30,9 +44,9 @@ const ProductFormFunc = ({ isNew = false }) => {
   const [isToastOn, setIsToastOn] = useState("");
   const [isOpenSpinner, setIsOpenSpinner] = useState("");
   const [form, setForm] = useState(initForm());
-  const { productId = '' } = useParams();
-  const location=useLocation();
-  const navigate=useNavigate();
+  const { productId = "" } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (productId) getSelectedProduct();
@@ -93,6 +107,10 @@ const ProductFormFunc = ({ isNew = false }) => {
     return errorMsg;
   };
 
+  const memoizedhandleInputChange = useCallback((event) => {
+    handleInputChange(event);
+  }, []);
+
   const handleInputChange = (event) => {
     const { target: { name = "", value = "" } = {} } = event;
     const control = form.find((control) => control.name === name);
@@ -104,20 +122,19 @@ const ProductFormFunc = ({ isNew = false }) => {
   };
 
   const createInputControl = () => {
-    // return formConfig.map((config, index) => {
-    // const control = form.find((control) => control.name === config.name);
     return form.map((control, index) => {
       return (
         <Fragment key={index}>
-          <div className="w-full text-left px-3 mb-6">
+          <div className="w-full text-left">
             <Controls
               label={`${control.name[0].toUpperCase()}${control.name.substring(
                 1
               )}`}
               name={control.name}
               value={control.value}
-              handleChange={handleInputChange}
+              handleChange={memoizedhandleInputChange}
               errorMessage={control.errorMessage}
+              formRef={control.ref}
             />
           </div>
         </Fragment>
@@ -136,6 +153,9 @@ const ProductFormFunc = ({ isNew = false }) => {
   const validateForm = () => {
     form.forEach((control) => {
       control.errorMessage = validateControl(control.name, control.value);
+      if(control.errorMessage){
+        control.ref.current.focus();
+      }
     });
     setForm([...form]);
     return form.every((control) => !control.errorMessage);
@@ -144,6 +164,7 @@ const ProductFormFunc = ({ isNew = false }) => {
   const showAndHideToast = () => {
     setIsToastOn(!isToastOn);
   };
+
   const save = () => {
     const isValidForm = validateForm();
     if (!isValidForm) return;
@@ -171,10 +192,10 @@ const ProductFormFunc = ({ isNew = false }) => {
         ></Toast>
       </PortalContainer>
 
-      <div className="w-full flex mt-10 px-10">
+      <div className="w-full flex">
         {!isNew && <img className="w-1/3 h-80" alt="" src={thumbnail} />}
 
-        <div className="w-2/3 -mx-3 mb-6 pl-3">{createInputControl()}</div>
+        <div className={`${isNew ? 'w-full':'w-2/3'} -mx-3 mb-6 pl-3`}>{createInputControl()}</div>
       </div>
       <div className="w-full flex mt-1 justify-end items-end pr-12">
         <button

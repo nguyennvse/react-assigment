@@ -43,7 +43,7 @@ const Toast = ({ isToastOn,message }) => {
             ></button>
           </div>
         </div>
-        <div className="p-3 bg-green-500 rounded-b-lg break-words text-white">
+        <div data-testid="toastmsg" className="p-3 bg-green-500 rounded-b-lg break-words text-white">
           {message}
         </div>
       </div>

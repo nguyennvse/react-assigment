@@ -48,7 +48,7 @@ const ProductCard = ({
     }
   };
   return (
-    <div className="flex w-4/5 mx-auto shadow-lg mt-2">
+    <div className="flex mx-auto shadow-lg mt-2">
       <img className="w-1/3" alt="" src={thumbnail} />
       <div className={`w-2/3 ${style['sm-text']}`}>
         <div className={`px-4 text-left pt-2 w-full ${style['card-content']}`}>

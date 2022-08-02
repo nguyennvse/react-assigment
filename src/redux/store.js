@@ -1,14 +1,25 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
-import { BaseReduxApi } from "./redux-api";
+import isOpenSideBarReducer from "./is-open-side-bar";
 import selectedProductsReducer from "./selected-products-slide";
+import storage from 'redux-persist/lib/storage';
+import persistReducer from "redux-persist/es/persistReducer";
+import PersistReducer from "./local-storage-slide";
+import thunk from 'redux-thunk';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig,PersistReducer)
 
 export const store = configureStore({
   reducer: {
-     selectedProducts: selectedProductsReducer,
-     [BaseReduxApi.reducerPath]:BaseReduxApi.reducer
-     },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(BaseReduxApi.middleware),
+    selectedProducts: selectedProductsReducer,
+    isOpenSideBar: isOpenSideBarReducer,
+    signedInUser: persistedReducer
+  },
+  middleware: [thunk]
 });
-setupListeners(store.dispatch)
+setupListeners(store.dispatch);

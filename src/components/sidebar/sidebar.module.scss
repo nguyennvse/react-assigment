@@ -1,0 +1,130 @@
+.sidebar {
+  height: 100vh;
+  color: white;
+  background-color: #2a2a3f;
+  transition: all 1s;
+}
+
+.collapse {
+  width: 70px;
+}
+
+.expand {
+  width: 200px;
+}
+
+.logo {
+  border-bottom: 1px solid lightgrey;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  height: 69px;
+  padding: 0 15px;
+}
+
+.logo-container {
+  border-radius: 50%;
+  min-height: 35px;
+  min-width: 35px;
+  border: 2px solid white;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-size: 20px;
+}
+
+.projectname {
+  margin-left: 5px;
+  white-space: nowrap;
+}
+
+.linkName {
+  margin-left: 5px;
+  line-height: 35px;
+  white-space: nowrap;
+  transition: all 1s;
+}
+
+.toggleicon {
+  position: absolute;
+  right: -15px;
+  top: 54px;
+  color: white;
+  background-color: #33337d;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  //   border-radius: 50%;
+  transform: rotate(45deg);
+  i {
+    transform: rotate(-45deg);
+  }
+}
+
+.active {
+  display: block;
+  font-weight: bold;
+  background-color: rgb(255, 255, 255);
+  color: #6060e1;
+  padding: 3px;
+  border-radius: 7px;
+  .logo-container {
+    border: 2px solid #6060e1;
+  }
+}
+
+.content {
+  position: relative;
+}
+
+.content h2 {
+  color: #fff !important;
+  font-size: 25px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top:0;
+  left: 57px;
+}
+
+.content h2:nth-child(1) {
+  color: transparent;
+  -webkit-text-stroke: 2px #03a9f4;
+}
+
+.content h2:nth-child(2) {
+  color: #03a9f4;
+  animation: animate 4s ease-in-out infinite;
+}
+
+@keyframes animate {
+  0%,
+  100% {
+    clip-path: polygon(
+      0% 45%,
+      16% 44%,
+      33% 50%,
+      54% 60%,
+      70% 61%,
+      84% 59%,
+      100% 52%,
+      100% 100%,
+      0% 100%
+    );
+  }
+
+  50% {
+    clip-path: polygon(
+      0% 60%,
+      15% 65%,
+      34% 66%,
+      51% 62%,
+      67% 50%,
+      84% 45%,
+      100% 46%,
+      100% 100%,
+      0% 100%
+    );
+  }
+}

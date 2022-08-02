@@ -16,5 +16,5 @@ it("should render list product", () => {
       <ListProductsRedux />
     </Provider>
   );
-  expect(container).toBeTruthy()
+  expect(container).toBeTruthy();
 });

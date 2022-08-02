@@ -126,6 +126,9 @@ it("should save click", async () => {
     fireEvent.click(getByTestId("save"));
     expect(container).toBeTruthy();
   });
+  await waitFor(()=>{
+    expect(getByTestId('toastmsg')).toHaveTextContent('Add successsfully!')
+  });
 });
 
 it("should update click", async () => {
