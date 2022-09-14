@@ -5,10 +5,10 @@ import style from "./layout.module.scss";
 import SideBar from "./sidebar/sidebar";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import Breadcrumb from "./breadcrumb/breadcrumb";
+// import Breadcrumb from "./breadcrumb/breadcrumb";
 const Layout = () => {
   const [theme, setTheme] = useState(true);
-  const isOpenSideBar = useSelector((state) => state.isOpenSideBar.value);
+  const isOpenSideBar = useSelector((state:any) => state.isOpenSideBar.value);
   const switchTheme = () => {
     setTheme((previousState) => !previousState);
   };
@@ -22,7 +22,7 @@ const Layout = () => {
         }`}
       >
         <div className="m-auto w-4/5">
-          <Breadcrumb />
+          {/* <Breadcrumb /> */}
           <Outlet />
         </div>
       </div>

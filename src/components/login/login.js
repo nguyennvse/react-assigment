@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setSignedInUser } from "../../redux/local-storage-slide";
-import { axiosInstance } from "../../services/base-api";
-import { getFormValue } from "../../services/utility";
-import { required } from "../../services/validation";
+import { setSignedInUser } from "../../redux/local-storage-slide.js";
+import { axiosInstance } from "../../services/base-api.js";
+import { getFormValue } from "../../services/utility.js";
+import { required } from "../../services/validation.js";
 import style from "./login.module.scss";
 
 const Login = () => {

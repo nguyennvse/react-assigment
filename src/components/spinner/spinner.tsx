@@ -1,9 +1,11 @@
 import React from "react";
 import style from "./spinner.module.scss";
 export default class Spinner extends React.Component {
-  constructor(props) {
+  props: Readonly<{isOpenSpinner:boolean}>;
+  constructor(props: Readonly<{isOpenSpinner:boolean}>) {
     super(props);
   }
+
   render() {
     return (
       this.props.isOpenSpinner && (

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setIsOpenSideBar } from "../../redux/is-open-side-bar";
 import { NavLink, useLocation } from "react-router-dom";
 
-const SideBar = ({ theme, switchTheme }) => {
+const SideBar = ({ theme, switchTheme }:{theme:boolean, switchTheme:any}) => {
   const linkArr = [
     { label: "List", path: "/", icon: "fa-solid fa-list" },
     { label: "New", path: "/editfunc", icon: "fa-solid fa-circle-plus" },
@@ -12,8 +12,23 @@ const SideBar = ({ theme, switchTheme }) => {
       path: "/cartredux",
       icon: "fa-solid fa-cart-shopping",
     },
+    {
+      label: "Chart",
+      path: "/chart",
+      icon: "fa-solid fa-cart-shopping",
+    },
+    {
+      label: "D3 Chart",
+      path: "/d3chart",
+      icon: "fa-solid fa-cart-shopping",
+    },
+    {
+      label: "Styled Component",
+      path: "/style",
+      icon: "fa-solid fa-cart-shopping",
+    },
   ];
-  const isOpenSideBar = useSelector((state) => state.isOpenSideBar.value);
+  const isOpenSideBar = useSelector((state:any) => state.isOpenSideBar.value);
   const dispatch = useDispatch();
   const location = useLocation();
 

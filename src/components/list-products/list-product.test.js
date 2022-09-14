@@ -17,6 +17,6 @@ it('should render', async () => {
           }
         ]
       });
-    const {container,} = render(<ListProducts/>);
+    const {container,getAllByText} = render(<ListProducts/>);
     await waitFor(()=>{expect(container).toBeTruthy();}) 
 });

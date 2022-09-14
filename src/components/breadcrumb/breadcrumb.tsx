@@ -1,8 +1,9 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
 import { BreadcrumbConstant } from "../../constant/breadcrumb.constant";
-import style from './breadcrumb.module.scss';
+import style from './breadcrumb.module.css';
 
 const Breadcrumb = () => {
     const initBreadcrumb = [{name:'Home',path:'/'}]
@@ -12,7 +13,9 @@ const Breadcrumb = () => {
       console.log('location',location)
         const {pathname} = location;
         if(pathname.slice(1)){
-            setList([{name:'Home',path:'/'},BreadcrumbConstant[pathname.slice(1)]])
+        // const breadcrumbConstant = BreadcrumbConstant[pathname.slice(1)] || {pathname:'/'};
+
+        //     setList([{name:'Home',path:'/'},breadcrumbConstant])
         }else{
             setList(initBreadcrumb)
         }
@@ -24,7 +27,7 @@ const Breadcrumb = () => {
         {list.length &&
           list.map((item, i) => (
             <li key={i}>
-              <NavLink className={style.link} to={item.path}> {item.name} {i !== (list.length-1) ? ' / ':''}</NavLink>
+              {/* <NavLink className={style.link} to={item.path}> {item.name} {i !== (list.length-1) ? ' / ':''}</NavLink> */}
             </li>
           ))}
       </ol>

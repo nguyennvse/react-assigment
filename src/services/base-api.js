@@ -7,17 +7,21 @@ export const axiosInstance = axios.create({
     "Content-Type": "application/json",
   },
 });
-export const get = (url) => {
-  return axios.get(`${baseUrl}${url}`);
+export const get = (url,body) => {
+  return axios.get(`${baseUrl}${url}`,body);
 };
 
-export const post = (url) => {
-  return axios.post(`${baseUrl}${url}`);
+export const post = (url,body) => {
+  return axios.post(`${baseUrl}${url}`,body);
 };
 
-export const put = (url) => {
-  return axios.put(`${baseUrl}${url}`);
+export const put = (url,body) => {
+  return axios.put(`${baseUrl}${url}`,body);
 };
+
+export const getProducts = () => {
+  return axios.get(`${baseUrl}products`)
+}
 
 axiosInstance.interceptors.request.use(
   (config) => {

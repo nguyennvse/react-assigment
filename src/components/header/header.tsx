@@ -1,8 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { HeaderProp } from "../../models/control.model";
 
 export default class Header extends React.Component {
-  constructor(props) {
+  activeClassName: string;
+  normalClassName: string;
+  props: Readonly<HeaderProp>;
+  constructor(props: Readonly<HeaderProp>) {
     super(props);
     this.activeClassName = "nav-link text-white font-semibold";
     this.normalClassName = "nav-link text-gray-400";
@@ -119,7 +123,7 @@ export default class Header extends React.Component {
                       className="form-check-label inline-block"
                       htmlFor="flexSwitchCheckDefault"
                     >
-                      {this.props.theme ? 'Dark':'Light'}
+                      {this.props.theme ? "Dark" : "Light"}
                     </label>
                   </div>
                 </div>

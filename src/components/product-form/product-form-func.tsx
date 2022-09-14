@@ -12,20 +12,25 @@ import PortalContainer from "../portal-container/portal-container";
 import Toast from "../toast/toast";
 import Spinner from "../spinner/spinner";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useMutation } from "react-query";
 
 const ProductFormFunc = ({ isNew = false }) => {
-  const titleRef = useRef('');
-  const stockRef = useRef('');
-  const descriptionRef = useRef('');
-  const discountPercentageRef = useRef('');
-  const priceRef = useRef('');
-  const ratingRef = useRef('');
+  const titleRef = useRef<HTMLInputElement>();
+  const stockRef = useRef<HTMLInputElement>();
+  const descriptionRef = useRef<HTMLInputElement>();
+  const discountPercentageRef = useRef<HTMLInputElement>();
+  const priceRef = useRef<HTMLInputElement>();
+  const ratingRef = useRef<HTMLInputElement>();
 
   const formConfig = [
-    { name: "title", validations: [required], ref:titleRef },
-    { name: "stock", validations: [required, isInteger],ref:stockRef },
-    { name: "description", validations: [required],ref: descriptionRef },
-    { name: "discountPercentage", validations: [required, isNumber], ref: discountPercentageRef },
+    { name: "title", validations: [required], ref: titleRef },
+    { name: "stock", validations: [required, isInteger], ref: stockRef },
+    { name: "description", validations: [required], ref: descriptionRef },
+    {
+      name: "discountPercentage",
+      validations: [required, isNumber],
+      ref: discountPercentageRef,
+    },
     { name: "price", validations: [required, isNumber], ref: priceRef },
     { name: "rating", validations: [required, isNumber], ref: ratingRef },
   ];
@@ -36,15 +41,27 @@ const ProductFormFunc = ({ isNew = false }) => {
       value: "",
       errorMessage: "",
       validations: config.validations,
-      ref: config.ref
+      ref: config.ref,
     }));
-  };
+  }
 
   const [thumbnail, setThumbnail] = useState("");
-  const [isToastOn, setIsToastOn] = useState("");
-  const [isOpenSpinner, setIsOpenSpinner] = useState("");
+  const [isToastOn, setIsToastOn] = useState(false);
+  const [isOpenSpinner, setIsOpenSpinner] = useState(false);
   const [form, setForm] = useState(initForm());
   const { productId = "" } = useParams();
+  const addProduct = useMutation(() => {
+    const body = getFormValue();
+    return post("products/add", body);
+  },
+  {
+    onSuccess: () => {
+      console.log('onSuccess')
+      // showAndHideToast();
+      setIsToastOn(true);
+      console.log('isToastOn',isToastOn)
+    },
+  });
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -87,7 +104,7 @@ const ProductFormFunc = ({ isNew = false }) => {
     }
   };
 
-  const patchDataToForm = (res) => {
+  const patchDataToForm = (res: any) => {
     Object.keys(res).forEach((key) => {
       const control = form.find((formControl) => formControl.name === key);
       if (control) {
@@ -97,7 +114,7 @@ const ProductFormFunc = ({ isNew = false }) => {
     setForm(form);
   };
 
-  const validateControl = (name, value) => {
+  const validateControl = (name: string, value: string) => {
     const config = formConfig.find((control) => control.name === name);
     if (!config) return "";
     let errorMsg = "";
@@ -107,11 +124,11 @@ const ProductFormFunc = ({ isNew = false }) => {
     return errorMsg;
   };
 
-  const memoizedhandleInputChange = useCallback((event) => {
+  const memoizedhandleInputChange = useCallback((event: any) => {
     handleInputChange(event);
   }, []);
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: any) => {
     const { target: { name = "", value = "" } = {} } = event;
     const control = form.find((control) => control.name === name);
     if (!control) return;
@@ -143,8 +160,8 @@ const ProductFormFunc = ({ isNew = false }) => {
   };
 
   const getFormValue = () => {
-    const obj = {};
-    form.forEach((control) => {
+    const obj: any = {};
+    form.forEach((control: any) => {
       obj[control.name] = control.value;
     });
     return obj;
@@ -153,7 +170,7 @@ const ProductFormFunc = ({ isNew = false }) => {
   const validateForm = () => {
     form.forEach((control) => {
       control.errorMessage = validateControl(control.name, control.value);
-      if(control.errorMessage){
+      if (control.ref.current && control.errorMessage) {
         control.ref.current.focus();
       }
     });
@@ -162,40 +179,59 @@ const ProductFormFunc = ({ isNew = false }) => {
   };
 
   const showAndHideToast = () => {
+
     setIsToastOn(!isToastOn);
   };
 
-  const save = () => {
+  const save = async () => {
+    // const isValidForm = validateForm();
+    // if (!isValidForm) return;
+    // const body = getFormValue();
+    // if (productId) {
+    //   import('')
+    //   put(`products/${productId}`, body).then((res) => {
+    //     showAndHideToast();
+    //     getSelectedProduct();
+    //   });
+    // } else {
+    //   post("products/add", body).then((res) => {
+    //     showAndHideToast();
+    //   });
+    // }
+
     const isValidForm = validateForm();
     if (!isValidForm) return;
     const body = getFormValue();
     if (productId) {
+      const { put } = await import("../../services/base-api");
+
       put(`products/${productId}`, body).then((res) => {
         showAndHideToast();
         getSelectedProduct();
       });
+      // addProduct.mutate();
     } else {
-      post("products/add", body).then((res) => {
-        showAndHideToast();
-      });
+      // const { post } = await import("../../services/base-api");
+      // post("products/add", body).then((res) => {
+      //   showAndHideToast();
+      // });
+      addProduct.mutate();
     }
   };
   return (
     <div>
-      <PortalContainer>
-        <Spinner isOpenSpinner={isOpenSpinner}></Spinner>
-      </PortalContainer>
-      <PortalContainer>
-        <Toast
-          isToastOn={isToastOn}
-          message={isNew ? "Add successfully" : "Update successfully"}
-        ></Toast>
-      </PortalContainer>
+      <Spinner isOpenSpinner={isOpenSpinner}></Spinner>
+      <Toast
+        isToastOn={isToastOn}
+        message={isNew ? "Add successfully" : "Update successfully"}
+      ></Toast>
 
       <div className="w-full flex">
         {!isNew && <img className="w-1/3 h-80" alt="" src={thumbnail} />}
 
-        <div className={`${isNew ? 'w-full':'w-2/3'} -mx-3 mb-6 pl-3`}>{createInputControl()}</div>
+        <div className={`${isNew ? "w-full" : "w-2/3"} -mx-3 mb-6 pl-3`}>
+          {createInputControl()}
+        </div>
       </div>
       <div className="w-full flex mt-1 justify-end items-end pr-12">
         <button

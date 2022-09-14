@@ -1,11 +1,10 @@
-import React, { Fragment } from "react";
+import React, { Fragment, Suspense } from "react";
 // import BaseApiService from "../../services/base-api";
 import { get } from "../../services/base-api";
 import ProductCard from "../product-card/product-card";
 import ContextStore from "../../context/context-store";
 import Spinner from "../spinner/spinner";
 import PortalContainer from "../portal-container/portal-container";
-
 
 export default class ListProducts extends React.Component {
   constructor() {
@@ -27,18 +26,21 @@ export default class ListProducts extends React.Component {
   render() {
     return (
       <div className="mt-8">
-        {this.state.productList.map((product) => (
-          <Fragment key={product.id}>
-            <ProductCard
-              isReduxList={false}
-              isList={true}
-              {...product}
-            ></ProductCard>
-          </Fragment>
-        ))}
-        <PortalContainer>
+        <Suspense fallback={<p>loading...</p>}>
+          {this.state.productList.map((product) => (
+            <Fragment key={product.id}>
+              <ProductCard
+                isReduxList={false}
+                isList={true}
+                {...product}
+              ></ProductCard>
+            </Fragment>
+          ))}
+        </Suspense>
+
+        {/* <PortalContainer>
           <Spinner isOpenSpinner={this.state.isOpenSpinner}></Spinner>
-        </PortalContainer>
+        </PortalContainer> */}
       </div>
     );
   }

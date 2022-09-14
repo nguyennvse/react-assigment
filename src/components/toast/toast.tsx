@@ -1,13 +1,17 @@
+import React from "react";
 import { useEffect, useRef } from "react";
 import style from "./toast.module.scss";
-const Toast = ({ isToastOn,message }) => {
-
+const Toast = ({
+  isToastOn,
+  message,
+}: {
+  isToastOn: boolean;
+  message: string;
+}) => {
   if (isToastOn) {
     return (
       <div
-        className={`bg-green-500 shadow-lg mx-auto w-96 max-w-full text-sm pointer-events-auto bg-clip-padding rounded-lg block mb-3 fixed -top-32 right-1/3 ${
-          style.slide
-        }`}
+        className={`bg-green-500 shadow-lg mx-auto w-96 max-w-full text-sm pointer-events-auto bg-clip-padding rounded-lg block mb-3 fixed -top-32 right-1/3 ${style.slide}`}
         id="static-example"
         role="alert"
         aria-live="assertive"
@@ -43,7 +47,10 @@ const Toast = ({ isToastOn,message }) => {
             ></button>
           </div>
         </div>
-        <div data-testid="toastmsg" className="p-3 bg-green-500 rounded-b-lg break-words text-white">
+        <div
+          data-testid="toastmsg"
+          className="p-3 bg-green-500 rounded-b-lg break-words text-white"
+        >
           {message}
         </div>
       </div>

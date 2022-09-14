@@ -18,12 +18,12 @@ const ProductCard = ({
   isShoppingCart = false,
   isReduxShoppingCart = false,
 }) => {
-  const [value, setContext] = useContext(ContextStore);
+  const [value, setContext]: any[] = useContext(ContextStore);
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
   const addProductToContext = () => {
-    const existedProduct = value.find((v) => v.id === id);
+    const existedProduct = value.find((v:any) => v.id === id);
     if (existedProduct) {
       existedProduct.quant += 1;
     } else {
@@ -36,12 +36,12 @@ const ProductCard = ({
     dispatch(increment({ id, title, description, thumbnail, quant: 1 }));
   };
 
-  const editQuant = (num) => {
-    const existedProduct = value.find((v) => v.id === id);
+  const editQuant = (num:number) => {
+    const existedProduct = value.find((v:any) => v.id === id);
     if (!existedProduct) return;
     const quant = existedProduct.quant + num;
     if (!quant) {
-      setContext(value.filter((v) => v.id !== id));
+      setContext(value.filter((v:any) => v.id !== id));
     } else {
       existedProduct.quant = quant;
       setContext(value);
@@ -81,7 +81,7 @@ const ProductCard = ({
           {isReduxList && (
             <Fragment>
               <button data-testid="navigate"
-                onClick={() => navigate(`/edit/${id}`)}
+                onClick={() => navigate(`/editfunc/${id}`)}
                 className={` bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full ${style['sm-button']}`}
               >
                 View Detail
