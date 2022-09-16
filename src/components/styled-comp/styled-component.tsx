@@ -67,10 +67,6 @@ const StyledComponent = ({ primary = false }) => {
     margin: auto;
   `;
   const Button = styled.button`
-    /* Adapt the colors based on primary prop */
-    background: ${(props) => (primary ? "palevioletred" : "white")};
-    color: ${(props) => (primary ? "white" : "palevioletred")};
-
     font-size: 1em;
     margin: 1em;
     padding: 0.25em 1em;
